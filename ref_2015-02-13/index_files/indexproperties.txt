@@ -1,0 +1,18 @@
+EXPORT void a_initialize_extension(void *xa)
+{ 
+ ...
+ // Index property - Index Key generator
+  mexima_run_amosql("add_Index_key_generator('MBTREE', 'Number', 'select uniform_int(1000, 0, 1000)');");
+
+  // Index property - SSF translation rules for MBTREE 
+  mexima_run_amosql("add_SSF_trans_rule('MBTREE', 1, #'Null', {#'>=', #'<='}, #'MBTREE_SELECT_RANGE', 0);");
+  mexima_run_amosql("add_SSF_trans_rule('MBTREE', 2, #'Null', {#'<='}, #'MBTREE_SELECT_RANGE', 0);");
+  mexima_run_amosql("add_SSF_trans_rule('MBTREE', 3, #'Null', {#'>='}, #'MBTREE_SELECT_RANGE', 0);");
+  
+  // Index property - SSF parameter generator   
+  mexima_run_amosql("add_SSF_para_generator('MBTREE', #'MBTREE_SELECT_RANGE',  \
+	                                'select l, u from Number l, Number u       \
+									 where  l in uniform_int(100, 0, 1000) and \
+									 u in uniform_int(100, 0, 1000)', '(Number, Number)');");
+  
+}

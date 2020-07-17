@@ -1,0 +1,56 @@
+<html xmlns:v="urn:schemas-microsoft-com:vml"
+xmlns:o="urn:schemas-microsoft-com:office:office"
+xmlns:w="urn:schemas-microsoft-com:office:word"
+xmlns:m="http://schemas.microsoft.com/office/2004/12/omml"
+xmlns="http://www.w3.org/TR/REC-html40">
+
+<head>
+</head>
+
+<body lang=EN-US link=blue vlink=purple style='tab-interval:.5in'>
+<div class=WordSection1>
+<h1 align="center">Plug-in, test, and utilize main memory index implementations</h1>
+
+<p class=author align="center">Thanh Truong, Tore Risch</p>
+<p class=Affiliation align="center"><span style='font-size:9.0pt;mso-bidi-font-size:
+10.0pt;mso-ansi-language:EN-US;mso-fareast-language:DE;font-style:normal'>Department
+of Information Technology, Uppsala University</span><span lang=EN-GB><br
+clear=all>
+</span><span lang=EN-GB style='letter-spacing:-.1pt;mso-ansi-language:EN-US'><span
+style='mso-spacerun:yes'> </span></span><span style='font-size:9.0pt;
+mso-bidi-font-size:10.0pt;mso-ansi-language:EN-US;mso-fareast-language:DE;
+font-style:normal'>Box 337, SE-751 05, Sweden</span><span style='mso-ansi-language:
+EN-US'><o:p></o:p></span></p>
+
+<p class=Email1 align="center">
+ <span class=e-mail>thanh.truong@it.uu.se<o:p></o:p></span> <br>
+ <span class=e-mail>tore.risch@it.uu.se<o:p></o:p></span></p>
+
+<h3 style="italic">Abstract </h3>
+<p align="justify" class=abstract style='text-indent:0in;line-height:150%'>
+Main memory database systems (MMDBs) are viable solutions for many applications. Different application domains require different kinds of indexing and there is a large of number main memory indexing implementations developed. However, adding an index structure into a database system can be challenging. Mexima (Main-memory External Index Manager) provides an MMDB where new main memory index structures can be plugged in without changing the index implementations. To transparently utilize new indexes in queries, Mexima provides index property tables populated by the extension developer. They enable automatic transformation of query fragments to call index-supported operations. When indexed attributes are hidden inside complex numerical expressions, an algebraic query transformation algorithm reasons on the expressions to expose hidden indexes. Furthermore, the index property tables are also used for validating the correctness of an index implementation by executing automatically generated test queries. Experiments show that the overhead of plugged in indexes is low compared to the stand-alone C/C++ implementations. Substantial performance gains are shown by the index exposing rewrite mechanisms.</p>
+
+<h4 >System architecture </h4>
+<img src="index_files/2014_Mexinma.png" alt="Mexima architecture" height="380" width="480" align="middle">
+<p>**Mexima is powered by <a href="http://www.it.uu.se/research/group/udbl/amos/">Amos II</a>  </p><img src="index_files/Amos2.png" alt="AmosII" height="90" width="180" align="middle">
+
+<h4 > Mexima </h4>
+<ul>
+	<li> Download <a href="index_files/mexima.zip">[mexima]</a> </li>
+	<li> Auto correctness test example <a href="index_files/test.osql">[test]</a> </li>
+</ul>
+<h4 > Snippet </h4>
+<ul>
+	<li> Initialization function <a href="index_files/a_initialization.txt">[a_initialization]</a> </li>
+	<li> SSF range search <a href="index_files/rangesearch.txt">[rangesearch]</a> </li>
+	<li> Index properties <a href="index_files/indexproperties.txt">[index properties]</a> </li>
+</ul>
+
+<h4> Index extension examples</h4> 
+<ul>
+	<li> B-tree index implementation<a href="index_files/btree.zip">[btree]</a> </li>
+	<li> Linear Hashing index implementation<a href="index_files/linh.zip">[linh]</a> </li>
+	<li> Xtree index implementation<a href="index_files/xtree.zip">[xtree]</a> </li>
+</ul>
+</body>
+</html>

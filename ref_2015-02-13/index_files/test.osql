@@ -1,0 +1,57 @@
+/*-*-sql-*-*******************************************************************
+ * AMOS2
+ *
+ * Author: (c) 2014 Thanh Truong, UDBL
+ * $RCSfile: test.osql,v $
+ * $Revision: 1.6 $ $Date: 2014/11/03 08:39:17 $
+ * $State: Exp $ $Locker:  $
+ *
+ * Description: Some index property entries
+ *
+ ****************************************************************************
+ * $Log: test.osql,v $
+ ****************************************************************************/
+/*--------------------------------------------------------------------------------
+ Preparation
+----------------------------------------------------------------------------------*/
+logging off;
+load_extension("datagenerator");
+
+print("
+/*--------------------------------------------------------------------------------
+ BAOs TEST
+----------------------------------------------------------------------------------*/");
+
+/*Set the current testing index name.Ex: MBTREE, XTREE
+ Optional: It can be set as environment variable*/
+set :idxtype = getEnv("TestIndex");
+
+BAOs_setup(:idxtype);
+
+set :idxkeygen = index_key_generator(:idxtype);
+
+BAOs_populateData(:idxtype, :idxkeygen);
+
+BAOs_lookup_test(:idxtype);
+
+BAOs_mapping_test(:idxtype);
+
+BAOs_deletion_test(:idxtype);
+
+BAOs_remaining_test(:idxtype);
+
+print("
+/*--------------------------------------------------------------------------------
+ SSF TEST
+----------------------------------------------------------------------------------*/");
+/*Populdate data once again*/
+BAOs_populateData(:idxtype, :idxkeygen);
+
+/*VQI queries are generated*/
+set :vqi = ssf_validation_queries(:idxtype);
+
+print("SSF Test " + :idxtype);
+/*Verify SSFs by running VQI queries and their corresponding VQR queries*/
+verify_SSFs(:vqi);
+
+BAOs_cleanup(:idxtype);

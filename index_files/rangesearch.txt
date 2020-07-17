@@ -1,0 +1,23 @@
+1	void IDS_range_search(m_context cxt){
+2	a_handle tbl = a_arg(cxt,0);   // Table handle
+3	int pos = a_int_arg(cxt,1);   // Indexed pos 
+4	int l = a_int_arg(cxt,2); // lower range
+5	int u = a_int_arg(cxt,3); // upper range
+6	IDShead *ind=(IDShead *)mexima_identifier(pos, tbl,ids_type);
+7	IDScomparer cmp = mexima_get_comparer(pos, tbl, ids_type);
+8	// call the map function of IDS-API: 
+9	IDSmap(ind->root, l, u,
+10	      (IDSmapper)rangemapper, cmp, cxt);}
+       // the function rangemapper() is defined as:
+11	int rangemapper(IDSitem *kv,m_context cxt){
+12	a_bind(cxt, 4, kv->value);
+13	a_emit(cxt);}
+
+
+The IDS_range_search() accesses the first four function parameters from the binding context cxt on lines 2-5. 
+Lines 2 and 4-5 dereference the handles to get integer values. 
+Line 6 assigns the pointer ind to the index structure on position pos of table tbl. 
+Line 7 gets a pointer to the compare function registered in the BAO table. 
+On line 9 the index API IDSmap() iterates over the index ind and calls the function range-mapper(kv,cxt), defined on lines 11-13, 
+on each index entry kv in the index. On line 12 the row (value part) of the key/value pair in the index is bound to the result 
+(5th pa-rameter). Finally, the macro a_emit() emits a result tuple.

@@ -1,0 +1,23 @@
+EXPORT void a_initialize_extension(void *xa)
+{ 
+  dcl_mexi_prop(idxpros)
+
+  strcpy(idxpros.name, "MBTREE"); /* Name of index */
+  idxpros.create = btintf_create;
+  idxpros.get = btintf_get;
+  idxpros.put = btintf_put;
+  idxpros.remove = btintf_delete;
+  idxpros.drop = btintf_drop;
+  idxpros.range_mapping = btinf_range_mapping;
+  idxpros.full_mapping = btintf_full_mapping; 
+  idxpros.compare = NULL; /* let mexima decide compare function */
+  idxpros.computekey = NULL;
+  idxpros.save = NULL;
+  idxpros.load = NULL;
+  idxpros.boxed = BOXED;
+  define_index(idxpros);
+
+  // Define some SSFs if any
+  . . .
+  
+}

@@ -1,0 +1,28 @@
+void mbtree_select_rangeBBBBF(a_callcontext cxt, a_tuple tpl) {
+  a_handle pos = a_getelem(tpl, 0, FALSE);  // Index pos
+  a_handle fno = a_getelem(tpl, 1, FALSE);   // Function
+  a_handle alower = a_getelem(tpl, 2, FALSE); // lower
+  a_handle aupper = a_getelem(tpl, 3, FALSE); // upper
+  BThead *bt;
+  struct applyMapData btxa;
+  void* lower, *upper;
+  mexi_compare cmpfn;
+  unbox(alower, lower, BOXED);
+  unbox(aupper, upper, BOXED);
+
+  if (a_datatype(pos) == INTEGERTYPE) {
+	// callback to get the index
+	bt = (BThead *) mexima_index_identifier(pos, fno);
+	if (bt != NULL) {
+		btxa.cxt = cxt;
+		btxa.tpl = tpl;
+		cmpfn = mexima_get_comparefn(pos, fno);
+		if (cmpfn != NULL) {
+			mexima_delay_update(pos, fno, TRUE);
+			BTmap0(bt->root, (BTdata)lower, (BTdata)upper, 
+				   (BTmapper)rangemapper, select_compare(cmpfn), (void *)&btxa);			
+			mexima_delay_update(pos, fno, FALSE);
+		}	
+	}
+  } 
+}

@@ -1,0 +1,18 @@
+	EXPORT int ids_type; // index type identifier
+1	EXPORT void a_initialize_extension(void *xa) {
+2	// declare a struct mexima index property
+3	dcl_mexi_index_prop(idxprop, “IDS”);
+4	//register BAOs:
+5	idxprop.create = ids_create;
+6	idxprop.put = ids_put;
+7	idxprop.remove = ids_delete;
+8	idxprop.drop = ids_drop;
+9	idxprop.get = ids_get;
+10	idxprop.map = ids_map;
+11	idxpros.comapre_key = ids_compare_key;
+12
+13
+14	// Register index type IDS with Mexima: 
+         ids_type = define_index(idxprop);	
+15	// Code to register SSFs: 
+16	…}
